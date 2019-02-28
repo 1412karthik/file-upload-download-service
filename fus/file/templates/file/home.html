@@ -1,0 +1,88 @@
+{% extends 'file/base.html' %}
+
+{% block title %}
+    <title>
+      Home
+    </title>
+{% endblock %}
+
+{% block style %}
+  <style>
+    table 
+    {
+      margin: auto;
+    }
+    #menudiv
+    {
+      width: auto;
+      height: auto;
+      text-align: center;
+      vertical-align: bottom;
+
+    }
+    #button1
+    {
+
+      width: 250px;
+      height: 30px;
+    }
+    #text1
+    {
+      text-align: center;
+      position: absolute;
+      left: 40%;
+    }
+  </style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+{% endblock %}
+
+{% block content %}
+  <div id="menudiv">
+    <h3> List of Uploaded Files </h3>
+  </div>
+  </br>
+  </br>
+  <div id = menudiv>
+    {% if files.has_previous %}
+        <a href="?page=1" style="text-decoration:none; font-size: 18px";>&laquo;First </a>
+        <a href="?page={{ files.previous_page_number }}" style="text-decoration:none; font-size: 18px">&emsp;&emsp;&emsp;&emsp;Previous </a>
+    {% endif %}
+  </div>
+  </br>
+  </br>
+  <table class="w3-table-all w3-hoverable" >
+    <tr>
+      <th>File Name</th>
+    </tr>
+    {% for file in files %}
+      <tr>
+        <td><a href="/file/{{user.username}}/{{file.name}}">{{file.name}}</a></td>
+      </tr> 
+    {% endfor %}
+  </table>
+  </br>
+  </br>
+  <div id = menudiv>
+    {% if files.has_next %}
+        <a href="?page={{ files.next_page_number }}" style="text-decoration:none; font-size: 18px">Next</a>
+        <a href="?page={{ files.paginator.num_pages }}" style="text-decoration:none; font-size: 18px">&emsp;&emsp;&emsp;&emsp;Last &raquo;</a>
+    {% endif %}
+  </div>
+  </br>
+  </br>
+  <h3 align=center>{{ warn_msg }}</h3>
+  <div id = menudiv>
+  <form action="/upload" method="GET">
+      <input type="submit" id ="button1" value="Upload"/>
+    </form>
+  </br>
+  <form action="/logout" method="GET">
+    <input type="submit" id ="button1" value="Logout" />
+  </form>
+  </br>
+  </br>
+  <h4 align=center>{{ token_user }} : {{ token_key }}</h4>
+  </br>
+  </br>
+{% endblock %}
